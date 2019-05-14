@@ -120,7 +120,7 @@ void print_symbol(struct symbol *sp) {
 		}
 		switch(node->nodetype){
 			case AST_POINTER:
-				fprintf(stdout, "pointer to \n");
+				fprintf(stdout, "pointer to \n");/*
 				for(struct ASTNODE* ptr_node = node->pointer_next; ptr_node; ptr_node = ptr_node->pointer_next) {
 					if(ptr_node->nodetype == AST_POINTER) {
 						tab_count++;

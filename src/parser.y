@@ -593,6 +593,7 @@ pointer_declarator:	pointer direct_declarator	{
 								// the break in pointers occurs bc of $2 and $$
 								for(struct ASTNODE *tn_search = $$; tn_search; tn_search = tn_search->next_node){
 									tail = tn_search;
+									$$ = tn_search;
 								}
 		  					}
 		  ;
@@ -610,12 +611,12 @@ pointer:	'*' type_qualifier_list		{
        |	'*' type_qualifier_list	pointer	{ 
        								$$ = create_node(AST_POINTER);
 								$$->pointer_next = $3;
-								$3->next_node = $$;
+								$$->next_node = $3;
 						}
        |	'*' pointer			{ 
 								$$ = create_node(AST_POINTER);
        								$$->pointer_next = $2;
-								$2->next_node = $$;
+								$$->next_node = $2;
 						}
        ;
 
