@@ -707,6 +707,7 @@ func_def:	func_def_specifier { entering_function = 1; } compound_statement	{
 												$$ = create_node(AST_FUNC);
 												$$->func_body = $3;
 												entering_function = 0; 
+												fprintf(stdout, "\n******** AST DUMP ********\n");
 												print_node($3, 0);
 											}
 	;
@@ -764,10 +765,11 @@ compound_statement:	'{' 	{
 
 decl_or_statement_list:	decl_or_statement				{
 		      								$$ = create_node(AST_STATEMENT_LIST);
-										$$->statement_node = $1;
-										$$->next_node = NULL;
+										$$->next_node = $1;
+										// $$->next_node = NULL;
 									}
 		      | decl_or_statement_list decl_or_statement	{
+		      								$$ = create_node(AST_STATEMENT_LIST);
 										$$ = $1;
 										$$->next_node = $2;
 									}

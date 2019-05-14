@@ -10,6 +10,7 @@
 
 int yyparse();
 void print_node(struct ASTNODE* node, int depth);
+void print_chained_node(struct ASTNODE* node, int depth);
 void print_string(struct ASTNODE* node);
 void print_number(struct ASTNODE* node);
 void print_char();
@@ -160,8 +161,8 @@ void print_node(struct ASTNODE* node, int depth){
 			fprintf(stdout, "LABELED");
 			break;
 		case AST_STATEMENT_LIST:
-			fprintf(stdout, "LIST {");
-			print_node(node->next_node, depth+1);
+			fprintf(stdout, "LIST {\n");
+			print_chained_node(node->next_node, depth+1);
 			fprintf(stdout, "\n}\n");
 			break;
 		default:
@@ -170,14 +171,22 @@ void print_node(struct ASTNODE* node, int depth){
 	return;
 }
 
-void print_string(struct ASTNODE* node){
+void print_chained_node(struct ASTNODE *node, int depth){
+	while(node){
+		print_node(node, depth);
+		node = node->next_node;
+	}
+	return;
+}
+
+void print_string(struct ASTNODE *node){
 	for(int i=0; i<node->string_size; i++){
 		print_char(node->string_lit[i]);
 	}
 	return;
 }
 
-void print_number(struct ASTNODE* node){
+void print_number(struct ASTNODE *node){
 	switch(node->sign_and_precision){
 		case I_LIT:
 			fprintf(stdout, "int)%d", node->i_lit);
