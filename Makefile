@@ -1,6 +1,6 @@
 CFLAGS=-I includes -fms-extensions
-CC=/usr/local/bin/gcc-8 
-# CC=gcc
+# CC=/usr/local/bin/gcc-8 
+CC=gcc
 
 src/lex.yy.c: src/lexer.l
 	lex -o $@ $^
